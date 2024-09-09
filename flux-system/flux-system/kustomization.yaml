@@ -1,5 +1,13 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
-resources:
-- gotk-components.yaml
-- gotk-sync.yaml
+metadata:
+  name: nginx-deployment
+  namespace: flux-system
+spec:
+  interval: 1m
+  path: "./nginx/base"  # Correct path to your Nginx manifests
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: FluxTest  # This should be your Git repository name
+  targetNamespace: default  # Resources will be deployed in the default namespace
